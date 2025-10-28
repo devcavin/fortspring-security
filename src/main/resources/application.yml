@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: fortspring-auth-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/fortspring
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  sql:
+    init:
+      mode: always
+  main:
+    allow-bean-definition-overriding: true
+  output:
+    ansi:
+      enabled: always
+  data:
+    jdbc:
+      dialect: postgresql
+server:
+  port: 8080
+
