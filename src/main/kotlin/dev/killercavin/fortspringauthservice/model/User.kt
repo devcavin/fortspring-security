@@ -1,33 +1,39 @@
 package dev.killercavin.fortspringauthservice.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import jakarta.validation.constraints.Email
-import jakarta.validation.constraints.NotBlank
-import org.springframework.data.annotation.CreatedDate
-import org.springframework.data.annotation.Id
-import org.springframework.data.annotation.LastModifiedDate
-import org.springframework.data.relational.core.mapping.Column
-import org.springframework.data.relational.core.mapping.Table
+import jakarta.persistence.*
+import org.hibernate.annotations.CreationTimestamp
+import org.hibernate.annotations.UpdateTimestamp
 import java.time.Instant
 
-@Table("users")
+@Entity
+@Table(name = "users")
 data class User(
-    @Id val id: Long?,
-    @field:NotBlank(message = "Full name cannot be blank") @Column("full_name")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long? = null,
+
+    @Column(name = "full_name", nullable = false)
     val fullName: String,
 
-    @field:NotBlank(message = "Username cannot be blank")
+    @Column(nullable = false, unique = true)
     val username: String,
 
-    @field:Email(message = "Invalid email format")
+    @Column(nullable = false, unique = true)
     val email: String,
 
-    @field:NotBlank(message = "Password cannot be blank") @get:JsonIgnore @Column("hashed_password")
+    @Column(name = "hashed_password", nullable = false)
+    @get:JsonIgnore
     val hashedPassword: String,
 
-    @CreatedDate @Column("created_at")
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     val createdAt: Instant? = null,
 
-    @LastModifiedDate @Column("updated_at")
-    val updatedAt: Instant? = null
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    val updatedAt: Instant? = null,
+
+    // Relation — one user can have multiple roles
+    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true)
+    val userRoles: MutableList<UserRole> = mutableListOf()
 )

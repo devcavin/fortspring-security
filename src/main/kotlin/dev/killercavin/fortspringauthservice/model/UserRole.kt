@@ -1,15 +1,38 @@
 package dev.killercavin.fortspringauthservice.model
 
-import org.springframework.data.annotation.CreatedDate
-import org.springframework.data.annotation.LastModifiedDate
-import org.springframework.data.relational.core.mapping.Column
-import org.springframework.data.relational.core.mapping.Table
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
+import jakarta.persistence.ForeignKey
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
+import jakarta.persistence.Table
+import org.hibernate.annotations.CreationTimestamp
+import org.hibernate.annotations.UpdateTimestamp
 import java.time.Instant
 
-@Table("user_roles")
+@Entity
+@Table(name = "user_roles")
 data class UserRole(
-    @Column("user_id") val userId: Long,
-    @Column("user_role") val roleId: Long,
-    @CreatedDate @Column("created_at") val createdAt: Instant? = null,
-    @LastModifiedDate @Column("updated_at") val updatedAt: Instant? = null
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long? = null,
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false, foreignKey = ForeignKey(name = "fk_user_role_user"))
+    val user: User,
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id", nullable = false, foreignKey = ForeignKey(name = "fk_user_role_role"))
+    val role: Role,
+
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    val createdAt: Instant? = null,
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    val updatedAt: Instant? = null
 )
