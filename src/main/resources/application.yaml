@@ -1,0 +1,15 @@
+spring:
+  application:
+    name:
+      spring-data-jpa
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/spring_data_jpa
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
