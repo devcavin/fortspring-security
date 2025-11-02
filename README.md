@@ -32,6 +32,6 @@ To build and run the project, follow these steps:
 * Navigate to the project directory: cd fortspring-security
 * Add database "fortspring" to postgres 
 * Build the project: ./grdlew clean build
-* Run the project: ./gradlew boot:Run 
+* Run the project: ./gradlew bootRun 
 
 -> The application will be available at http://localhost:8080
