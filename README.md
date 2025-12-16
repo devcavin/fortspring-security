@@ -28,7 +28,7 @@ To get started with this project, you will need to have the following installed 
 
 To build and run the project, follow these steps:
 
-* Clone the repository: `git clone https://github.com/Killercavin/fortspring-security.git`
+* Clone the repository: `git clone https://github.com/devcavin/fortspring-security.git`
 * Navigate to the project directory: cd fortspring-security
 * Add database "fortspring" to postgres 
 * Build the project: ./grdlew clean build
